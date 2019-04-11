@@ -19,7 +19,8 @@ resource "aws_iam_user_group_membership" "user" {
 }
 
 # IAM policy that allows the users to administer their own user
-# accounts.
+# accounts.  This policy is pretty much copied from here:
+# https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html
 data "aws_iam_policy_document" "iam_self_admin_doc" {
   count = "${length(var.usernames)}"
 
