@@ -4,6 +4,17 @@ language: python
 python: 3.7
 services: docker
 
+# Install terraform and terraform-doc
+before_install:
+  - >
+    wget
+    https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
+    -O terraform.zip
+  - sudo unzip terraform.zip -d /opt/terraform
+  - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
+  - rm -f terraform.zip
+  - go get github.com/segmentio/terraform-docs
+
 install:
   - pip install --upgrade -r requirements-test.txt
 script:
