@@ -32,29 +32,10 @@ data "aws_iam_policy_document" "bod_lambda_log_doc" {
   }
 }
 
-# The policy for our IAM group
+# The CloudWatch log policy for our IAM group
 resource "aws_iam_group_policy" "bod_log_watchers" {
   count = "${length(var.scan_types)}"
 
   group  = "${aws_iam_group.bod_log_watchers.id}"
   policy = "${data.aws_iam_policy_document.bod_lambda_log_doc.*.json[count.index]}"
-}
-
-# The users being created
-resource "aws_iam_user" "user" {
-  count = "${length(var.usernames)}"
-
-  name = "${var.usernames[count.index]}"
-  tags = "${var.tags}"
-}
-
-# Put the users in the IAM group we created
-resource "aws_iam_user_group_membership" "user" {
-  count = "${length(var.usernames)}"
-
-  user = "${aws_iam_user.user.*.name[count.index]}"
-
-  groups = [
-    "${aws_iam_group.bod_log_watchers.name}",
-  ]
 }
