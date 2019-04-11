@@ -1,16 +1,9 @@
-# skeleton-generic #
+# bod-18-01-cloudwatch-users #
 
-[![Build Status](https://travis-ci.com/cisagov/skeleton-generic.svg?branch=develop)](https://travis-ci.com/cisagov/skeleton-generic)
+[![Build Status](https://travis-ci.com/cisagov/bod-18-01-cloudwatch-users.svg?branch=develop)](https://travis-ci.com/cisagov/bod-18-01-cloudwatch-users)
 
-This is a generic skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) GitHub project started.
-This skeleton project contains [licensing information](LICENSE.md), as
-well as [pre-commit hooks](https://pre-commit.com) and a [Travis
-CI](https://travis-ci.com) configuration appropriate for the major
-languages that we use.
-
-In many cases you will instead want to use one of the more specific
-skeleton projects derived from this one.
+This is a Terraform project for creating AWS users that only have
+permission to view CloudWatch logs related to BOD 18-01 scanning.
 
 ## Contributing ##
 
