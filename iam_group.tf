@@ -32,10 +32,34 @@ data "aws_iam_policy_document" "bod_lambda_log_doc" {
   }
 }
 
-# The CloudWatch log policy for our IAM group
+# IAM policy document that allows listing of CloudWatch log groups.
+# This will be applied to the IAM group we are creating.
+data "aws_iam_policy_document" "list_log_doc" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "logs:DescribeLogGroups",
+    ]
+
+    resources = [
+      "*",
+    ]
+  }
+}
+
+# The CloudWatch log policy for our IAM group that lets the users view
+# the BOD 18-01 Lambda logs.
 resource "aws_iam_group_policy" "bod_log_watchers" {
   count = "${length(var.scan_types)}"
 
   group  = "${aws_iam_group.bod_log_watchers.id}"
   policy = "${data.aws_iam_policy_document.bod_lambda_log_doc.*.json[count.index]}"
+}
+
+# The CloudWatch log policy for our IAM group that lets the users list
+# the CloudWatch log groups associated with the account.
+resource "aws_iam_group_policy" "list_logs" {
+  group  = "${aws_iam_group.bod_log_watchers.id}"
+  policy = "${data.aws_iam_policy_document.list_log_doc.json}"
 }
