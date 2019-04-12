@@ -24,6 +24,7 @@ resource "aws_iam_user_group_membership" "user" {
 data "aws_iam_policy_document" "iam_self_admin_doc" {
   count = "${length(var.usernames)}"
 
+  # Allow users to view their own account information
   statement {
     effect = "Allow"
 
@@ -128,7 +129,9 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
-      "${aws_iam_user.user.*.arn[count.index]}",
+      # The MFA ARN is identical to that of the user, except that the
+      # text "user" is replaced by "mfa"
+      "${replace(aws_iam_user.user.*.arn[count.index], "user", "mfa")}",
     ]
   }
 
