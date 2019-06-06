@@ -1,20 +1,20 @@
 # The users being created
 resource "aws_iam_user" "user" {
-  count = "${length(var.usernames)}"
+  count = length(var.usernames)
 
-  name = "${var.usernames[count.index]}"
-  tags = "${var.tags}"
+  name = var.usernames[count.index]
+  tags = var.tags
 }
 
 # Put the users in the IAM group that gives them permission to read
 # the BOD 18-091 Lambda logs.
 resource "aws_iam_user_group_membership" "user" {
-  count = "${length(var.usernames)}"
+  count = length(var.usernames)
 
-  user = "${aws_iam_user.user.*.name[count.index]}"
+  user = aws_iam_user.user[count.index].name
 
   groups = [
-    "${aws_iam_group.bod_log_watchers.name}",
+    aws_iam_group.bod_log_watchers.name,
   ]
 }
 
@@ -22,7 +22,7 @@ resource "aws_iam_user_group_membership" "user" {
 # accounts.  This policy is pretty much copied from here:
 # https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html
 data "aws_iam_policy_document" "iam_self_admin_doc" {
-  count = "${length(var.usernames)}"
+  count = length(var.usernames)
 
   # Allow users to view their own account information
   statement {
@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
-      "${aws_iam_user.user.*.arn[count.index]}",
+      aws_iam_user.user[count.index].arn,
     ]
   }
 
@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
-      "${aws_iam_user.user.*.arn[count.index]}",
+      aws_iam_user.user[count.index].arn,
     ]
   }
 
@@ -81,7 +81,7 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
-      "${aws_iam_user.user.*.arn[count.index]}",
+      aws_iam_user.user[count.index].arn,
     ]
   }
 
@@ -98,7 +98,7 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
-      "${aws_iam_user.user.*.arn[count.index]}",
+      aws_iam_user.user[count.index].arn,
     ]
   }
 
@@ -115,7 +115,7 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
-      "${aws_iam_user.user.*.arn[count.index]}",
+      aws_iam_user.user[count.index].arn,
     ]
   }
 
@@ -131,7 +131,7 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     resources = [
       # The MFA ARN is identical to that of the user, except that the
       # text "user" is replaced by "mfa"
-      "${replace(aws_iam_user.user.*.arn[count.index], "user", "mfa")}",
+      replace(aws_iam_user.user[count.index].arn, "user", "mfa"),
     ]
   }
 
@@ -147,7 +147,7 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
-      "${aws_iam_user.user.*.arn[count.index]}",
+      aws_iam_user.user[count.index].arn,
     ]
   }
 
@@ -182,8 +182,8 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
 
 # The IAM self-administration policy for our IAM users
 resource "aws_iam_user_policy" "user" {
-  count = "${length(var.usernames)}"
+  count = length(var.usernames)
 
-  user   = "${aws_iam_user.user.*.name[count.index]}"
-  policy = "${data.aws_iam_policy_document.iam_self_admin_doc.*.json[count.index]}"
+  user   = aws_iam_user.user[count.index].name
+  policy = data.aws_iam_policy_document.iam_self_admin_doc[count.index].json
 }
