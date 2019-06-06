@@ -129,6 +129,8 @@ data "aws_iam_policy_document" "iam_self_admin_doc" {
     ]
 
     resources = [
+      # The MFA ARN is identical to that of the user, except that the
+      # text "user" is replaced by "mfa"
       replace(aws_iam_user.user[count.index].arn, "user", "mfa"),
     ]
   }
