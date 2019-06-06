@@ -6,7 +6,7 @@ resource "aws_iam_group" "bod_log_watchers" {
 
 # Import some data about the already-existing log groups
 data "aws_cloudwatch_log_group" "bod_lambda_logs" {
-  count = "${length(var.scan_types)}"
+  count = length(var.scan_types)
 
   name = "/aws/lambda/${var.lambda_function_names[var.scan_types[count.index]]}"
 }
@@ -15,7 +15,7 @@ data "aws_cloudwatch_log_group" "bod_lambda_logs" {
 # to BOD 18-01 scanning.  This will be applied to the IAM group we are
 # creating.
 data "aws_iam_policy_document" "bod_lambda_log_doc" {
-  count = "${length(var.scan_types)}"
+  count = length(var.scan_types)
 
   statement {
     effect = "Allow"
@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "bod_lambda_log_doc" {
     ]
 
     resources = [
-      "${data.aws_cloudwatch_log_group.bod_lambda_logs.*.arn[count.index]}",
+      data.aws_cloudwatch_log_group.bod_lambda_logs[count.index].arn,
     ]
   }
 }
@@ -51,15 +51,15 @@ data "aws_iam_policy_document" "list_log_doc" {
 # The CloudWatch log policy for our IAM group that lets the users view
 # the BOD 18-01 Lambda logs.
 resource "aws_iam_group_policy" "bod_log_watchers" {
-  count = "${length(var.scan_types)}"
+  count = length(var.scan_types)
 
-  group  = "${aws_iam_group.bod_log_watchers.id}"
-  policy = "${data.aws_iam_policy_document.bod_lambda_log_doc.*.json[count.index]}"
+  group  = aws_iam_group.bod_log_watchers.id
+  policy = data.aws_iam_policy_document.bod_lambda_log_doc[count.index].json
 }
 
 # The CloudWatch log policy for our IAM group that lets the users list
 # the CloudWatch log groups associated with the account.
 resource "aws_iam_group_policy" "list_logs" {
-  group  = "${aws_iam_group.bod_log_watchers.id}"
-  policy = "${data.aws_iam_policy_document.list_log_doc.json}"
+  group  = aws_iam_group.bod_log_watchers.id
+  policy = data.aws_iam_policy_document.list_log_doc.json
 }
