@@ -5,6 +5,66 @@
 This is a Terraform project for creating AWS users that only have
 permission to view CloudWatch logs related to BOD 18-01 scanning.
 
+## Pre-requisites ##
+
+- [Terraform](https://www.terraform.io/) installed on your system.
+- AWS CLI access
+  [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+  for the appropriate account on your system.
+- An accessible AWS S3 bucket to store Terraform state
+  (specified in [`backend.tf`](backend.tf)).
+- An accessible AWS DynamoDB database to store the Terraform state lock
+  (specified in [`backend.tf`](backend.tf)).
+
+## Customizing Your Environment ##
+
+Create a terraform variables file to be used for your environment (e.g.
+  `production.tfvars`), based on the variables listed in [Inputs](#Inputs)
+  below. Here is a sample of what that file might look like:
+
+```hcl
+aws_region = "us-east-2"
+
+usernames = ["firstname1.lastname1", "firstname2.lastname2"]
+
+scan_types = ["pshtt", "trustymail"]
+lambda_function_names = {
+  "pshtt"      = "task_pshtt",
+  "trustymail" = "task_trustymail"
+}
+
+tags = {
+  Team        = "CISA Development Team"
+  Application = "BOD 18-01 Scanning"
+  Workspace   = "production"
+}
+```
+
+## Building the Terraform-based infrastructure ##
+
+1. Create a Terraform workspace (if you haven't already done so) by running:
+
+   ```console
+   terraform workspace new <workspace_name>`
+   ```
+
+1. Create a `<workspace_name>.tfvars` file with all of the required
+   variables and any optional variables desired (see [Inputs](#Inputs) below
+   for details).
+1. Run the command `terraform init`.
+1. Create the Terraform infrastructure by running the command:
+
+   ```console
+   terraform apply -var-file=<workspace_name>.tfvars
+   ```
+
+## Tearing down the Terraform-based infrastructure ##
+
+1. Select the appropriate Terraform workspace by running
+   `terraform workspace select <workspace_name>`.
+1. Destroy the Terraform infrastructure in that workspace by running
+   `terraform destroy -var-file=<workspace_name>.tfvars`.
+
 ## Requirements ##
 
 | Name | Version |
