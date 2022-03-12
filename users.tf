@@ -3,7 +3,6 @@ resource "aws_iam_user" "user" {
   count = length(var.usernames)
 
   name = var.usernames[count.index]
-  tags = var.tags
 }
 
 # Put the users in the IAM group that gives them permission to read
