@@ -14,8 +14,8 @@ variable "scan_types" {
   type        = list(string)
 }
 
-variable "usernames" {
-  description = "The usernames associated with the accounts to be created.  The format first.last is recommended. Example: [\"firstname1.lastname1\", \"firstname2.lastname2\"]"
+variable "users" {
+  description = "A list of the usernames for the users that should be given access to the BOD 18-01 CloudWatch logs. Example: [\"firstname1.lastname1\", \"firstname2.lastname2\"]"
   type        = list(string)
 }
 

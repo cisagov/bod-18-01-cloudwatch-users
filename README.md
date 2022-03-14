@@ -15,6 +15,10 @@ permission to view CloudWatch logs related to BOD 18-01 scanning.
   (specified in [`backend.tf`](backend.tf)).
 - An accessible AWS DynamoDB database to store the Terraform state lock
   (specified in [`backend.tf`](backend.tf)).
+- User accounts for all users must have been created previously. We recommend
+  using the
+  [`cisagov/cyhy-users-non-admin`](https://github.com/cisagov/cyhy-users-non-admin)
+  repository to create users.
 
 ## Customizing Your Environment ##
 
@@ -89,14 +93,12 @@ No modules.
 | [aws_iam_group.bod_log_watchers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group) | resource |
 | [aws_iam_group_policy.bod_log_watchers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_policy) | resource |
 | [aws_iam_group_policy.list_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_policy) | resource |
-| [aws_iam_user.user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_group_membership.user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_group_membership) | resource |
-| [aws_iam_user_policy.user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_cloudwatch_log_group.bod_lambda_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudwatch_log_group) | data source |
 | [aws_iam_policy_document.bod_lambda_log_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.iam_self_admin_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.list_log_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_user.users](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_user) | data source |
 
 ## Inputs ##
 
@@ -107,7 +109,7 @@ No modules.
 | lambda\_function\_names | The names to use for the AWS Lambda functions.  The keys should match the contents of scan\_types and the values should be the name of the corresponding Lamba. Example: { "pshtt" = "task\_pshtt" } | `map(string)` | n/a | yes |
 | scan\_types | The scan types that can be run. Example: ["pshtt"] | `list(string)` | n/a | yes |
 | tags | Tags to apply to all AWS resources created. | `map(string)` | `{}` | no |
-| usernames | The usernames associated with the accounts to be created.  The format first.last is recommended. Example: ["firstname1.lastname1", "firstname2.lastname2"] | `list(string)` | n/a | yes |
+| users | A list of the usernames for the users that should be given access to the BOD 18-01 CloudWatch logs. Example: ["firstname1.lastname1", "firstname2.lastname2"] | `list(string)` | n/a | yes |
 
 ## Outputs ##
 
