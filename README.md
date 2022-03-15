@@ -91,7 +91,8 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_iam_group.bod_log_watchers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group) | resource |
-| [aws_iam_group_policy.bod_log_watchers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_policy) | resource |
+| [aws_iam_group_policy_attachment.bodlambdalogreadaccess_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_group_policy_attachment) | resource |
+| [aws_iam_policy.bodlambdalogreadaccess_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_user_group_membership.user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_group_membership) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_cloudwatch_log_group.bod_lambda_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudwatch_log_group) | data source |
@@ -104,6 +105,8 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | aws\_availability\_zone | The AWS availability zone to deploy into (e.g. a, b, c, etc.). | `string` | `"a"` | no |
 | aws\_region | The AWS region to deploy into (e.g. us-east-1). | `string` | `"us-east-1"` | no |
+| bodlambdalogreadaccess\_policy\_description | The description to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs. | `string` | `"Allows read access to the BOD 18-01 Lambda logs."` | no |
+| bodlambdalogreadaccess\_policy\_name | The name to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs. | `string` | `"BODLambdaLogReadAccess"` | no |
 | lambda\_function\_names | The names to use for the AWS Lambda functions.  The keys should match the contents of scan\_types and the values should be the name of the corresponding Lamba. Example: { "pshtt" = "task\_pshtt" } | `map(string)` | n/a | yes |
 | scan\_types | The scan types that can be run. Example: ["pshtt"] | `list(string)` | n/a | yes |
 | tags | Tags to apply to all AWS resources created. | `map(string)` | `{}` | no |

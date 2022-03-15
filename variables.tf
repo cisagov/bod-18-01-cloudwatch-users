@@ -38,6 +38,19 @@ variable "aws_region" {
   type        = string
 }
 
+variable "bodlambdalogreadaccess_policy_description" {
+  default     = "Allows read access to the BOD 18-01 Lambda logs."
+  description = "The description to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs."
+  type        = string
+}
+
+variable "bodlambdalogreadaccess_policy_name" {
+  default     = "BODLambdaLogReadAccess"
+  description = "The name to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs."
+  type        = string
+
+}
+
 variable "tags" {
   default     = {}
   description = "Tags to apply to all AWS resources created."
