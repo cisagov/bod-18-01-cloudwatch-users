@@ -4,14 +4,9 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
-variable "lambda_function_names" {
-  description = "The names to use for the AWS Lambda functions.  The keys should match the contents of scan_types and the values should be the name of the corresponding Lamba. Example: { \"pshtt\" = \"task_pshtt\" }"
+variable "bod_lambdas" {
+  description = "A map whose keys are the names of the BOD scan types and whose values are the names of the corresponding AWS Lambdas. Example: { \"pshtt\" = \"task_pshtt\" }"
   type        = map(string)
-}
-
-variable "scan_types" {
-  description = "The scan types that can be run. Example: [\"pshtt\"]"
-  type        = list(string)
 }
 
 variable "users" {

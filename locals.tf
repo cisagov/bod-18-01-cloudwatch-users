@@ -6,9 +6,9 @@ data "aws_caller_identity" "current" {}
 
 # Import some data about the already-existing log groups
 data "aws_cloudwatch_log_group" "bod_lambda_logs" {
-  count = length(var.scan_types)
+  for_each = var.bod_lambdas
 
-  name = "/aws/lambda/${var.lambda_function_names[var.scan_types[count.index]]}"
+  name = "/aws/lambda/${each.value}"
 }
 
 locals {
