@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "bodlambdalogreadaccess_policy_doc" {
       "logs:GetLogEvents",
     ]
 
-    resources = data.aws_cloudwatch_log_group.bod_lambda_logs[*].arn
+    resources = values(data.aws_cloudwatch_log_group.bod_lambda_logs)[*].arn
   }
 }
 
