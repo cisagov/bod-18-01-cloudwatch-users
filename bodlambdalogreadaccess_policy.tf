@@ -32,6 +32,6 @@ data "aws_iam_policy_document" "bodlambdalogreadaccess_policy_doc" {
 # The policy that allows read access to the BOD 18-01 Lambda logs
 resource "aws_iam_policy" "bodlambdalogreadaccess_policy" {
   description = var.bodlambdalogreadaccess_policy_description
-  name        = var.bodlambdalogreadaccess_policy_name
+  name        = local.bodlambdalogreadaccess_policy_name
   policy      = data.aws_iam_policy_document.bodlambdalogreadaccess_policy_doc.json
 }

@@ -40,7 +40,7 @@ variable "aws_region" {
 
 variable "bod_log_watchers_group_name" {
   default     = "bod_log_watchers"
-  description = "The name of the group to be created for BOD 18-01 Lambda log access users."
+  description = "The base name of the group to be created for BOD 18-01 Lambda log access users. Note that in production workspaces, '-production' is automatically appended this group name.  In non-production workspaces, '-<workspace_name>' is automatically appended to this group name."
   type        = string
 }
 
@@ -52,7 +52,7 @@ variable "bodlambdalogreadaccess_policy_description" {
 
 variable "bodlambdalogreadaccess_policy_name" {
   default     = "BODLambdaLogReadAccess"
-  description = "The name to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs."
+  description = "The base name to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs. Note that in production workspaces, '-production' is automatically appended this policy name.  In non-production workspaces, '-<workspace_name>' is automatically appended to this policy name."
   type        = string
 
 }
