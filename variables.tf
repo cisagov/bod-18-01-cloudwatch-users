@@ -38,6 +38,12 @@ variable "aws_region" {
   type        = string
 }
 
+variable "bod_log_watchers_group_name" {
+  default     = "bod_log_watchers"
+  description = "The name of the group to be created for BOD 18-01 Lambda log access users."
+  type        = string
+}
+
 variable "bodlambdalogreadaccess_policy_description" {
   default     = "Allows read access to the BOD 18-01 Lambda logs."
   description = "The description to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs."

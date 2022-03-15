@@ -105,6 +105,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | aws\_availability\_zone | The AWS availability zone to deploy into (e.g. a, b, c, etc.). | `string` | `"a"` | no |
 | aws\_region | The AWS region to deploy into (e.g. us-east-1). | `string` | `"us-east-1"` | no |
+| bod\_log\_watchers\_group\_name | The name of the group to be created for BOD 18-01 Lambda log access users. | `string` | `"bod_log_watchers"` | no |
 | bodlambdalogreadaccess\_policy\_description | The description to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs. | `string` | `"Allows read access to the BOD 18-01 Lambda logs."` | no |
 | bodlambdalogreadaccess\_policy\_name | The name to associate with the IAM policy that allows read access to the BOD 18-01 Lambda logs. | `string` | `"BODLambdaLogReadAccess"` | no |
 | lambda\_function\_names | The names to use for the AWS Lambda functions.  The keys should match the contents of scan\_types and the values should be the name of the corresponding Lamba. Example: { "pshtt" = "task\_pshtt" } | `map(string)` | n/a | yes |
