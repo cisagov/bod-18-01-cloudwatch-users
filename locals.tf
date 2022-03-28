@@ -13,8 +13,8 @@ data "aws_cloudwatch_log_group" "bod_lambda_logs" {
 
 locals {
   # Determine if this is a Production workspace by checking
-  # if terraform.workspace begins with "prod-"
-  production_workspace = length(regexall("^prod-", terraform.workspace)) == 1
+  # if terraform.workspace begins with "prod"
+  production_workspace = length(regexall("^prod", terraform.workspace)) == 1
 
   bod_log_watchers_group_name = local.production_workspace ? format("%s-production", var.bod_log_watchers_group_name) : format("%s-%s", var.bod_log_watchers_group_name, terraform.workspace)
 
