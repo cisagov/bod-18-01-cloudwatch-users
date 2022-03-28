@@ -16,7 +16,7 @@ locals {
   # if terraform.workspace begins with "prod"
   production_workspace = length(regexall("^prod", terraform.workspace)) == 1
 
-  bod_log_watchers_group_name = local.production_workspace ? format("%s-production", var.bod_log_watchers_group_name) : format("%s-%s", var.bod_log_watchers_group_name, terraform.workspace)
+  bod_log_watchers_group_name = format("%s-%s", var.bod_log_watchers_group_name, local.production_workspace ? "production" : terraform.workspace)
 
-  bodlambdalogreadaccess_policy_name = local.production_workspace ? format("%s-production", var.bodlambdalogreadaccess_policy_name) : format("%s-%s", var.bodlambdalogreadaccess_policy_name, terraform.workspace)
+  bodlambdalogreadaccess_policy_name = format("%s-%s", var.bodlambdalogreadaccess_policy_name, local.production_workspace ? "production" : terraform.workspace)
 }
