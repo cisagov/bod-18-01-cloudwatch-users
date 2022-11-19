@@ -23,7 +23,7 @@ permission to view CloudWatch logs related to BOD 18-01 scanning.
 ## Customizing Your Environment ##
 
 Create a terraform variables file to be used for your environment (e.g.
-  `production.tfvars`), based on the variables listed in [Inputs](#Inputs)
+  `production.tfvars`), based on the variables listed in [Inputs](#inputs)
   below. Here is a sample of what that file might look like:
 
 ```hcl
@@ -53,7 +53,7 @@ tags = {
    ```
 
 1. Create a `<workspace_name>.tfvars` file with all of the required
-   variables and any optional variables desired (see [Inputs](#Inputs) below
+   variables and any optional variables desired (see [Inputs](#inputs) below
    for details).
 1. Run the command `terraform init`.
 1. Create the Terraform infrastructure by running the command:
