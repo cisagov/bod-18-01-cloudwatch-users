@@ -3,9 +3,8 @@
 resource "aws_iam_user_group_membership" "user" {
   for_each = toset(var.users)
 
-  user = data.aws_iam_user.users[each.value].user_name
-
   groups = [
     aws_iam_group.bod_log_watchers.name,
   ]
+  user = data.aws_iam_user.users[each.value].user_name
 }

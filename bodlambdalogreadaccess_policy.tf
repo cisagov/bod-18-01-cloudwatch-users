@@ -4,12 +4,10 @@
 data "aws_iam_policy_document" "bodlambdalogreadaccess_policy_doc" {
   # Allow listing of CloudWatch log groups.
   statement {
-    effect = "Allow"
-
     actions = [
       "logs:DescribeLogGroups",
     ]
-
+    effect = "Allow"
     resources = [
       "*",
     ]
@@ -17,14 +15,12 @@ data "aws_iam_policy_document" "bodlambdalogreadaccess_policy_doc" {
 
   # Allow access to the individual log groups
   statement {
-    effect = "Allow"
-
     actions = [
       "logs:DescribeLogStreams",
       "logs:FilterLogEvents",
       "logs:GetLogEvents",
     ]
-
+    effect    = "Allow"
     resources = [for k, v in data.aws_cloudwatch_log_group.bod_lambda_logs : v.arn]
   }
 }
