@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "bodlambdalogreadaccess_policy_doc" {
       "logs:GetLogEvents",
     ]
     effect    = "Allow"
-    resources = [for k, v in data.aws_cloudwatch_log_group.bod_lambda_logs : v.arn]
+    resources = flatten([for k, v in data.aws_cloudwatch_log_group.bod_lambda_logs : [v.arn, "${v.arn}:log-stream:"]])
   }
 }
 
