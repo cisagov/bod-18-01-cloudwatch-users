@@ -1,6 +1,8 @@
 # bod-18-01-cloudwatch-users #
 
 [![GitHub Build Status](https://github.com/cisagov/bod-18-01-cloudwatch-users/workflows/build/badge.svg)](https://github.com/cisagov/bod-18-01-cloudwatch-users/actions)
+[![License](https://img.shields.io/github/license/cisagov/bod-18-01-cloudwatch-users)](https://spdx.org/licenses/)
+[![CodeQL](https://github.com/cisagov/bod-18-01-cloudwatch-users/workflows/CodeQL/badge.svg)](https://github.com/cisagov/bod-18-01-cloudwatch-users/actions/workflows/codeql-analysis.yml)
 
 This is a Terraform project for creating AWS users that only have
 permission to view CloudWatch logs related to BOD 18-01 scanning.
